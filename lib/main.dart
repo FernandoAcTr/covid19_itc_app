@@ -1,3 +1,4 @@
+import 'package:covid19_itc/src/ui/pages/alerts/alerts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:covid19_itc/src/ui/router.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         Routes.home: (_) => HomePage(),
         Routes.listSurvey: (_) => SurveyPage(),
         Routes.testsPage: (_) => TestsPage(),
+        Routes.alertsPage: (_) => AlertsPage(),
       },
     );
   }

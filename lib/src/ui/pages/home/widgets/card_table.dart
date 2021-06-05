@@ -15,7 +15,12 @@ class CardTable extends StatelessWidget {
             color: Colors.blue,
             onTap: () => Navigator.pushNamed(context, Routes.listSurvey),
           ),
-          _CardButton(icon: Icons.notification_important, text: 'Alertas', color: Colors.pink),
+          _CardButton(
+            icon: Icons.notification_important,
+            text: 'Alertas',
+            color: Colors.pink,
+            onTap: () => Navigator.pushNamed(context, Routes.alertsPage),
+          ),
         ]),
         TableRow(children: [
           _CardButton(
