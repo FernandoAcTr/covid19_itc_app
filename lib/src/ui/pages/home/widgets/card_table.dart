@@ -29,7 +29,12 @@ class CardTable extends StatelessWidget {
             color: Colors.green,
             onTap: () => Navigator.pushNamed(context, Routes.testsPage),
           ),
-          _CardButton(icon: Icons.medical_services, text: 'Consultas', color: Colors.orange),
+          _CardButton(
+            icon: Icons.medical_services,
+            text: 'Consultas',
+            color: Colors.orange,
+            onTap: () => Navigator.pushNamed(context, Routes.consultasPage),
+          ),
         ]),
       ]),
     );

@@ -1,4 +1,3 @@
-import 'package:covid19_itc/src/ui/pages/alerts/alerts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:covid19_itc/src/ui/router.dart';
@@ -7,6 +6,8 @@ import 'package:covid19_itc/src/ui/pages/pruebas/tests_page.dart';
 import 'package:covid19_itc/src/ui/pages/encuestas/survey_page.dart';
 import 'package:covid19_itc/src/ui/pages/home/home_page.dart';
 import 'package:covid19_itc/src/ui/pages/login/login_page.dart';
+import 'package:covid19_itc/src/ui/pages/alerts/alerts_page.dart';
+import 'package:covid19_itc/src/ui/pages/consultas/constultas_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         Routes.listSurvey: (_) => SurveyPage(),
         Routes.testsPage: (_) => TestsPage(),
         Routes.alertsPage: (_) => AlertsPage(),
+        Routes.consultasPage: (_) => ConsultasPage(),
       },
     );
   }
