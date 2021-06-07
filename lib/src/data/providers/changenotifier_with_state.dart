@@ -5,9 +5,11 @@ abstract class ChangeNotifierWithState<S> with ChangeNotifier {
 
   S get state => _state;
 
-  void setState(S nextState, [bool notify = true]) {
+  void setState(S nextState, {bool notify = true}) {
     _state = nextState;
-    print('$runtimeType: currentState: $state');
-    if (notify) notifyListeners();
+    if (notify) {
+      print('$runtimeType: currentState: $state');
+      notifyListeners();
+    }
   }
 }
