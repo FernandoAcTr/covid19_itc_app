@@ -1,17 +1,15 @@
 import 'dart:convert';
 
-import 'package:covid19_itc/src/data/entities/respuesta.dart';
-
 class Encuesta {
-  int? encuestaId;
+  int encuestaId;
   String? otrosSintomas;
-  DateTime? fechaAplicacion;
+  DateTime fechaAplicacion;
   List<Respuesta>? respuestas;
 
   Encuesta({
-    this.encuestaId,
+    required this.encuestaId,
     this.otrosSintomas,
-    this.fechaAplicacion,
+    required this.fechaAplicacion,
     this.respuestas,
   });
 
@@ -29,7 +27,55 @@ class Encuesta {
   Map<String, dynamic> toMap() => {
         "encuesta_id": encuestaId,
         "otros_sintomas": otrosSintomas,
-        "fecha_aplicacion": fechaAplicacion?.toIso8601String(),
+        "fecha_aplicacion": fechaAplicacion.toIso8601String(),
         "respuestas": respuestas != null ? List<dynamic>.from(respuestas!.map((x) => x.toMap())) : null,
+      };
+}
+
+class Respuesta {
+  String respuesta;
+  Pregunta pregunta;
+
+  Respuesta({
+    required this.respuesta,
+    required this.pregunta,
+  });
+
+  factory Respuesta.fromJson(String str) => Respuesta.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Respuesta.fromMap(Map<String, dynamic> json) => Respuesta(
+        respuesta: json['respuesta'],
+        pregunta: Pregunta.fromMap(json["pregunta"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "respuesta": respuesta,
+        "pregunta": pregunta.toMap(),
+      };
+}
+
+class Pregunta {
+  int preguntaId;
+  String pregunta;
+
+  Pregunta({
+    required this.preguntaId,
+    required this.pregunta,
+  });
+
+  factory Pregunta.fromJson(String str) => Pregunta.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Pregunta.fromMap(Map<String, dynamic> json) => Pregunta(
+        preguntaId: json["pregunta_id"],
+        pregunta: json["pregunta"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "pregunta_id": preguntaId,
+        "pregunta": pregunta,
       };
 }

@@ -38,7 +38,15 @@ class _TestItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(this.date),
-      subtitle: Text(this.result),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(this.result,
+              style: TextStyle(color: this.positive ? Theme.of(context).accentColor : Theme.of(context).primaryColor)),
+          Text('Tipo: PCR'),
+          Text('Médico: Joe Doe'),
+        ],
+      ),
       leading: CircleAvatar(
         backgroundColor: this.positive ? Theme.of(context).accentColor : Theme.of(context).primaryColor,
         child: Icon(
