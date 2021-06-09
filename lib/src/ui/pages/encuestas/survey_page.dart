@@ -9,24 +9,27 @@ class SurveyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final encuestaState = Provider.of<EncuestaProvider>(context).state;
+    final provider = Provider.of<EncuestaProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Encuestas aplicadas'),
       ),
-      body: encuestaState.loading
+      body: provider.state.loading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: encuestaState.encuestas.length,
-              itemBuilder: (_, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _ListItem(encuestaState.encuestas[index]),
-                    Divider(),
-                  ],
-                );
-              },
+          : RefreshIndicator(
+              onRefresh: () async => provider.fetchEncuestas(),
+              child: ListView.builder(
+                itemCount: provider.state.encuestas.length,
+                itemBuilder: (_, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _ListItem(provider.state.encuestas[index]),
+                      Divider(),
+                    ],
+                  );
+                },
+              ),
             ),
     );
   }

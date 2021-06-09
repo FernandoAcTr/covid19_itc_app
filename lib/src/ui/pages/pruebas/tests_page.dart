@@ -19,17 +19,20 @@ class TestsPage extends StatelessWidget {
 class _TestList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<PruebaProvider>(context).state;
-    return state.loading
+    final provider = Provider.of<PruebaProvider>(context);
+    return provider.state.loading
         ? Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: state.pruebas.length,
-            itemBuilder: (_, index) {
-              return _TestItem(
-                prueba: state.pruebas[index],
-                positive: state.pruebas[index].resultado == "POSITIVO",
-              );
-            },
+        : RefreshIndicator(
+            onRefresh: () async => provider.fetchPruebas(),
+            child: ListView.builder(
+              itemCount: provider.state.pruebas.length,
+              itemBuilder: (_, index) {
+                return _TestItem(
+                  prueba: provider.state.pruebas[index],
+                  positive: provider.state.pruebas[index].resultado == "POSITIVO",
+                );
+              },
+            ),
           );
   }
 }
