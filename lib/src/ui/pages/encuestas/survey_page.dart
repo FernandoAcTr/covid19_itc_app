@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:covid19_itc/src/data/entities/encuesta.dart';
-import 'package:covid19_itc/src/data/providers/encuestas/encuesta_provider.dart';
+import 'package:covid19_itc/src/data/providers/encuesta/encuesta_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

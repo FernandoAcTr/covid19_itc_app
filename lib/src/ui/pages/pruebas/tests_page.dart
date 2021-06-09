@@ -1,4 +1,8 @@
+import 'package:covid19_itc/src/data/entities/prueba.dart';
+import 'package:covid19_itc/src/data/providers/prueba/prueba_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TestsPage extends StatelessWidget {
   @override
@@ -15,36 +19,42 @@ class TestsPage extends StatelessWidget {
 class _TestList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (_, index) {
-        return _TestItem(date: '21/05/21', result: 'Negativo');
-      },
-    );
+    final state = Provider.of<PruebaProvider>(context).state;
+    return state.loading
+        ? Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            itemCount: state.pruebas.length,
+            itemBuilder: (_, index) {
+              return _TestItem(
+                prueba: state.pruebas[index],
+                positive: state.pruebas[index].resultado == "POSITIVO",
+              );
+            },
+          );
   }
 }
 
 class _TestItem extends StatelessWidget {
+  final Prueba prueba;
   final bool positive;
-  final String date;
-  final String result;
+
   const _TestItem({
-    this.positive = false,
-    required this.date,
-    required this.result,
+    required this.prueba,
+    required this.positive,
   });
 
   @override
   Widget build(BuildContext context) {
+    final stringFecha = DateFormat.yMMMMEEEEd().format(prueba.fechaDeteccion!);
     return ListTile(
-      title: Text(this.date),
+      title: Text(stringFecha),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(this.result,
+          Text(this.prueba.resultado!,
               style: TextStyle(color: this.positive ? Theme.of(context).accentColor : Theme.of(context).primaryColor)),
-          Text('Tipo: PCR'),
-          Text('Médico: Joe Doe'),
+          Text('Tipo: ${prueba.tipo.descripcion}'),
+          Text('Médico: ${prueba.medico.nombre} ${prueba.medico.aPaterno} ${prueba.medico.aMaterno}'),
         ],
       ),
       leading: CircleAvatar(
