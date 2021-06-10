@@ -44,7 +44,6 @@ class _FloatingButton extends StatelessWidget {
         } else {
           showSnackBar(text: 'Consulta programada. Espera a que un médico te asigne una fecha', context: context);
           provider.addConsulta(provider.txtSintomasController.text, provider.state.modalidad!);
-          provider.txtSintomasController.text = '';
           FocusScope.of(context).unfocus();
         }
       },

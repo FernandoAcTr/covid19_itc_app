@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Alert extends StatelessWidget {
+class CusttomAlert extends StatelessWidget {
   final String title;
   final String content;
   final List<Widget>? actions;
 
-  const Alert({
+  const CusttomAlert({
     required this.title,
     required this.content,
     this.actions,

@@ -55,6 +55,7 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
       status: 'Pendiente',
       solicitudId: Random().nextInt(1000).toString(),
     ));
+    txtSintomasController.text = '';
     setState(state.copyWith(consultas: currentList));
   }
 
