@@ -24,10 +24,10 @@ class EncuestaProvider extends ChangeNotifierWithState<EncuestaState> {
         fechaAplicacion: DateTime(2021, 06, 7),
         respuestas: [respuesta1, respuesta2, respuesta3]);
     encuesta.otrosSintomas = 'No siento nada';
-    encuestas.add(encuesta);
-    encuestas.add(encuesta);
-    encuestas.add(encuesta);
-    encuestas.add(encuesta);
+    // encuestas.add(encuesta);
+    // encuestas.add(encuesta);
+    // encuestas.add(encuesta);
+    // encuestas.add(encuesta);
     setState(state.copyWith(loading: false, encuestas: encuestas));
   }
 }

@@ -59,8 +59,8 @@ class ListConsultas extends StatelessWidget {
 
     return provider.state.loading
         ? Center(child: CircularProgressIndicator())
-        : Column(
-            children: children,
-          );
+        : children.length > 0
+            ? Column(children: children)
+            : Center(child: Text('No tienes ninguna consulta programada'));
   }
 }

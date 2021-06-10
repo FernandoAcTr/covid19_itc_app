@@ -18,19 +18,30 @@ class SurveyPage extends StatelessWidget {
           ? Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: () async => provider.fetchEncuestas(),
-              child: ListView.builder(
-                itemCount: provider.state.encuestas.length,
-                itemBuilder: (_, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _ListItem(provider.state.encuestas[index]),
-                      Divider(),
-                    ],
-                  );
-                },
-              ),
+              child: provider.state.encuestas.length > 0
+                  ? buildListView(provider)
+                  : ListView(
+                      children: [
+                        SizedBox(height: 200),
+                        Center(child: Text('Aun no has realizado ninguna encuesta')),
+                      ],
+                    ),
             ),
+    );
+  }
+
+  ListView buildListView(EncuestaProvider provider) {
+    return ListView.builder(
+      itemCount: provider.state.encuestas.length,
+      itemBuilder: (_, index) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ListItem(provider.state.encuestas[index]),
+            Divider(),
+          ],
+        );
+      },
     );
   }
 }

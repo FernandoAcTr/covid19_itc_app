@@ -24,16 +24,27 @@ class _TestList extends StatelessWidget {
         ? Center(child: CircularProgressIndicator())
         : RefreshIndicator(
             onRefresh: () async => provider.fetchPruebas(),
-            child: ListView.builder(
-              itemCount: provider.state.pruebas.length,
-              itemBuilder: (_, index) {
-                return _TestItem(
-                  prueba: provider.state.pruebas[index],
-                  positive: provider.state.pruebas[index].resultado == "POSITIVO",
-                );
-              },
-            ),
+            child: provider.state.pruebas.length > 0
+                ? _buildListView(provider)
+                : ListView(
+                    children: [
+                      SizedBox(height: 200),
+                      Center(child: Text('No te has realizado ninguna prueba de Covid-19')),
+                    ],
+                  ),
           );
+  }
+
+  ListView _buildListView(PruebaProvider provider) {
+    return ListView.builder(
+      itemCount: provider.state.pruebas.length,
+      itemBuilder: (_, index) {
+        return _TestItem(
+          prueba: provider.state.pruebas[index],
+          positive: provider.state.pruebas[index].resultado == "POSITIVO",
+        );
+      },
+    );
   }
 }
 

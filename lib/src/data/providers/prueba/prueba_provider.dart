@@ -25,10 +25,10 @@ class PruebaProvider extends ChangeNotifierWithState<PruebaState> {
       fechaDeteccion: DateTime.now(),
       resultado: 'NEGATIVO',
     );
-    pruebas.add(prueba);
-    pruebas.add(prueba);
-    pruebas.add(prueba);
-    pruebas.add(prueba);
+    // pruebas.add(prueba);
+    // pruebas.add(prueba);
+    // pruebas.add(prueba);
+    // pruebas.add(prueba);
     setState(state.copyWith(loading: false, pruebas: pruebas));
   }
 }
