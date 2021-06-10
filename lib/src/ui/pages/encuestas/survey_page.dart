@@ -43,7 +43,7 @@ class _ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final stringFecha = DateFormat.yMMMMEEEEd().format(encuesta.fechaAplicacion);
     final children = encuesta.respuestas
-        ?.map(
+        .map(
           (r) => ListTile(
             title: Text(r.pregunta.pregunta),
             subtitle: Text(r.respuesta),
@@ -51,9 +51,9 @@ class _ListItem extends StatelessWidget {
         )
         .toList();
 
-    children?.add(ListTile(
+    children.add(ListTile(
       title: Text('Otros sintomas'),
-      subtitle: Text(encuesta.otrosSintomas!),
+      subtitle: Text(encuesta.otrosSintomas),
     ));
 
     return ExpansionTile(
@@ -61,7 +61,7 @@ class _ListItem extends StatelessWidget {
       leading: Icon(Icons.text_snippet),
       textColor: Theme.of(context).primaryColor,
       iconColor: Theme.of(context).primaryColor,
-      children: children ?? [],
+      children: children,
     );
   }
 }

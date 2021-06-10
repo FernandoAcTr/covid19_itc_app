@@ -1,6 +1,5 @@
 import 'package:covid19_itc/src/data/entities/medico.dart';
 import 'package:covid19_itc/src/data/entities/prueba.dart';
-import 'package:covid19_itc/src/data/entities/usuario.dart';
 import 'package:covid19_itc/src/data/providers/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/prueba/prueba_state.dart';
 
@@ -18,16 +17,10 @@ class PruebaProvider extends ChangeNotifierWithState<PruebaState> {
       ordenId: '1',
       tipo: Tipo(tipoId: 1, descripcion: 'PCR'),
       medico: Medico(
-        rfc: 'XXXXXXX',
         aMaterno: 'Juan',
         aPaterno: 'Garcia',
         nombre: 'Marquez',
-        cedula: '123456',
         medicoId: '1234567',
-      ),
-      usuario: Usuario(
-        usuarioId: '123456',
-        email: 'fernando@gmail.com',
       ),
       fechaDeteccion: DateTime.now(),
       resultado: 'NEGATIVO',

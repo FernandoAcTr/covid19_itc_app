@@ -1,21 +1,18 @@
 import 'dart:convert';
 
 import 'package:covid19_itc/src/data/entities/medico.dart';
-import 'package:covid19_itc/src/data/entities/usuario.dart';
 
 class Prueba {
   String ordenId;
-  String? resultado;
+  String resultado;
   DateTime? fechaDeteccion;
-  Usuario usuario;
   Medico medico;
   Tipo tipo;
 
   Prueba({
     required this.ordenId,
-    this.resultado,
+    required this.resultado,
     this.fechaDeteccion,
-    required this.usuario,
     required this.medico,
     required this.tipo,
   });
@@ -26,9 +23,8 @@ class Prueba {
 
   factory Prueba.fromMap(Map<String, dynamic> json) => Prueba(
         ordenId: json["orden_id"],
-        resultado: json["resultado"],
+        resultado: json["resultado"] ?? '',
         fechaDeteccion: DateTime.parse(json["fecha_deteccion"]),
-        usuario: Usuario.fromMap(json["usuario"]),
         medico: Medico.fromMap(json["medico"]),
         tipo: Tipo.fromMap(json["tipo"]),
       );
@@ -37,7 +33,6 @@ class Prueba {
         "orden_id": ordenId,
         "resultado": resultado,
         "fecha_deteccion": fechaDeteccion?.toIso8601String(),
-        "usuario": usuario.toMap(),
         "medico": medico.toMap(),
         "tipo": tipo.toMap(),
       };

@@ -54,7 +54,7 @@ class _TestItem extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(this.prueba.resultado!,
+          Text(this.prueba.resultado,
               style: TextStyle(color: this.positive ? Theme.of(context).accentColor : Theme.of(context).primaryColor)),
           Text('Tipo: ${prueba.tipo.descripcion}'),
           Text('Médico: ${prueba.medico.nombre} ${prueba.medico.aPaterno} ${prueba.medico.aMaterno}'),

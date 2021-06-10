@@ -2,15 +2,15 @@ import 'dart:convert';
 
 class Encuesta {
   int encuestaId;
-  String? otrosSintomas;
+  String otrosSintomas;
   DateTime fechaAplicacion;
-  List<Respuesta>? respuestas;
+  List<Respuesta> respuestas;
 
   Encuesta({
     required this.encuestaId,
-    this.otrosSintomas,
+    required this.otrosSintomas,
     required this.fechaAplicacion,
-    this.respuestas,
+    required this.respuestas,
   });
 
   factory Encuesta.fromJson(String str) => Encuesta.fromMap(json.decode(str));
@@ -19,16 +19,17 @@ class Encuesta {
 
   factory Encuesta.fromMap(Map<String, dynamic> json) => Encuesta(
         encuestaId: json["encuesta_id"],
-        otrosSintomas: json["otros_sintomas"],
+        otrosSintomas: json["otros_sintomas"] ?? '',
         fechaAplicacion: DateTime.parse(json["fecha_aplicacion"]),
-        respuestas: List<Respuesta>.from(json["respuestas"].map((x) => Respuesta.fromMap(x))),
+        respuestas:
+            json["respuestas"] != null ? List<Respuesta>.from(json["respuestas"].map((x) => Respuesta.fromMap(x))) : [],
       );
 
   Map<String, dynamic> toMap() => {
         "encuesta_id": encuestaId,
         "otros_sintomas": otrosSintomas,
         "fecha_aplicacion": fechaAplicacion.toIso8601String(),
-        "respuestas": respuestas != null ? List<dynamic>.from(respuestas!.map((x) => x.toMap())) : null,
+        "respuestas": List<dynamic>.from(respuestas.map((x) => x.toMap())),
       };
 }
 
