@@ -10,6 +10,8 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
   final _txtSintomasController = TextEditingController();
   final _formConsultaKey = GlobalKey<FormState>();
 
+  bool _active = true;
+
   ConsultaProvider() {
     setState(ConsultaState(
       modalidad: null,
@@ -44,7 +46,7 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
     );
 
     consultas.add(consulta);
-    setState(state.copyWith(loading: false, consultas: consultas));
+    setState(state.copyWith(loading: false, consultas: consultas), notify: _active);
   }
 
   addConsulta(String sintomas, String modalidad) {
@@ -63,5 +65,11 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
     final currentList = state.consultas;
     final newList = currentList.where((element) => element.solicitudId != solicitudId).toList();
     setState(state.copyWith(consultas: newList));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _active = false;
   }
 }

@@ -5,6 +5,8 @@ import 'package:covid19_itc/src/data/providers/alerta/alerta_state.dart';
 import 'package:covid19_itc/src/data/providers/changenotifier_with_state.dart';
 
 class AlertaProvider extends ChangeNotifierWithState<AlertaState> {
+  bool _active = true;
+
   AlertaProvider() {
     setState(AlertaState(
       alertas: [],
@@ -51,7 +53,7 @@ class AlertaProvider extends ChangeNotifierWithState<AlertaState> {
     alertas.add(alerta3);
     alertas.add(alerta3);
 
-    setState(state.copyWith(loading: false, alertas: alertas));
+    setState(state.copyWith(loading: false, alertas: alertas), notify: _active);
   }
 
   List<Alerta> get todayAlerts {
@@ -72,5 +74,11 @@ class AlertaProvider extends ChangeNotifierWithState<AlertaState> {
 
   List<Alerta> get historyAlerts {
     return state.alertas.where((alert) => alert.status != 'PENDIENTE').toList();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _active = false;
   }
 }
