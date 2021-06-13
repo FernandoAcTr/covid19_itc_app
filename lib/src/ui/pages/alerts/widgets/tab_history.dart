@@ -15,11 +15,15 @@ class TabHistory extends StatelessWidget {
         : RefreshIndicator(
             onRefresh: () => provider.fetchAlerts(),
             child: Padding(
-              padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-              child: alerts.length > 0
-                  ? _ListAlerts(alerts: alerts)
-                  : Center(child: Text('No tienes ninguna alerta en tu historial')),
-            ),
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                child: alerts.length > 0
+                    ? _ListAlerts(alerts: alerts)
+                    : ListView(
+                        children: [
+                          SizedBox(height: 200),
+                          Center(child: Text('No tienes ninguna alerta en tu historial')),
+                        ],
+                      )),
           );
   }
 }

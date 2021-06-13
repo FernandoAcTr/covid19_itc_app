@@ -20,7 +20,12 @@ class TabPendings extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
                 child: todayAlerts.length > 0 || previousAlerts.length > 0
                     ? _buildListView(todayAlerts, previousAlerts, context)
-                    : Center(child: Text('No hay alertas nuevas'))),
+                    : ListView(
+                        children: [
+                          SizedBox(height: 200),
+                          Center(child: Text('No hay alertas nuevas')),
+                        ],
+                      )),
           );
   }
 
