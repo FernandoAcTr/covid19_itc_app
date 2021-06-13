@@ -1,7 +1,11 @@
-import 'package:covid19_itc/src/data/entities/medico.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:covid19_itc/src/data/entities/prueba.dart';
 import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/prueba/prueba_state.dart';
+import 'package:covid19_itc/src/data/keys.dart';
+import 'package:covid19_itc/src/device/shared_prefs.dart';
 
 class PruebaProvider extends ChangeNotifierWithState<PruebaState> {
   PruebaProvider() {
@@ -11,24 +15,18 @@ class PruebaProvider extends ChangeNotifierWithState<PruebaState> {
 
   void fetchPruebas() async {
     setState(state.copyWith(loading: true));
-    await Future.delayed(Duration(seconds: 2));
-    final List<Prueba> pruebas = [];
-    final prueba = Prueba(
-      ordenId: '1',
-      tipo: Tipo(tipoId: 1, descripcion: 'PCR'),
-      medico: Medico(
-        aMaterno: 'Juan',
-        aPaterno: 'Garcia',
-        nombre: 'Marquez',
-        medicoId: '1234567',
-      ),
-      fechaDeteccion: DateTime.now(),
-      resultado: 'NEGATIVO',
-    );
-    // pruebas.add(prueba);
-    // pruebas.add(prueba);
-    // pruebas.add(prueba);
-    // pruebas.add(prueba);
+    final usuario = SharedPrefs().usuario;
+    List<Prueba> pruebas = [];
+    final url = "$BASE_URL/ordenes/usuario/${usuario?.usuarioId}";
+
+    try {
+      final resp = await http.get(Uri.parse(url), headers: {'Authorization': "Bearer ${usuario?.token}"});
+      final body = json.decode(resp.body);
+      pruebas = body.map<Prueba>((x) => Prueba.fromMap(x)).toList();
+      print(pruebas);
+    } catch (e) {
+      print(e);
+    }
     setState(state.copyWith(loading: false, pruebas: pruebas));
   }
 }
