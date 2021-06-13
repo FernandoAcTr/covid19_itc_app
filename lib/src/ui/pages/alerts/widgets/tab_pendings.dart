@@ -19,24 +19,24 @@ class TabPendings extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
                 child: todayAlerts.length > 0 || previousAlerts.length > 0
-                    ? _buildListView(todayAlerts, previousAlerts)
+                    ? _buildListView(todayAlerts, previousAlerts, context)
                     : Center(child: Text('No hay alertas nuevas'))),
           );
   }
 
-  ListView _buildListView(List<Alerta> todayAlerts, List<Alerta> previousAlerts) {
+  ListView _buildListView(List<Alerta> todayAlerts, List<Alerta> previousAlerts, BuildContext context) {
     return ListView(
       children: [
         if (todayAlerts.length > 0) Text('Hoy'),
-        ..._mapAlerts(todayAlerts),
+        ..._mapAlerts(todayAlerts, context),
         SizedBox(height: 20),
         if (previousAlerts.length > 0) Text('Anteriores'),
-        ..._mapAlerts(previousAlerts),
+        ..._mapAlerts(previousAlerts, context),
       ],
     );
   }
 
-  List<CusttomAlert> _mapAlerts(List<Alerta> alerts) {
+  List<CusttomAlert> _mapAlerts(List<Alerta> alerts, BuildContext context) {
     return alerts
         .map((item) => CusttomAlert(
               title: DateFormat.yMMMMEEEEd().format(item.createAt),
@@ -44,7 +44,7 @@ class TabPendings extends StatelessWidget {
               actions: [
                 TextButton(
                   child: Text('Marcar como leida'),
-                  onPressed: () {},
+                  onPressed: () => Provider.of<AlertaProvider>(context, listen: false).readAlert(item),
                 )
               ],
             ))
