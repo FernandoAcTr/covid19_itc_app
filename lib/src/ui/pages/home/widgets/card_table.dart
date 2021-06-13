@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:covid19_itc/src/data/providers/login/login_provider.dart';
 import 'package:covid19_itc/src/ui/router.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardTable extends StatelessWidget {
   @override
@@ -35,6 +37,18 @@ class CardTable extends StatelessWidget {
             color: Colors.orange,
             onTap: () => Navigator.pushNamed(context, Routes.consultasPage),
           ),
+        ]),
+        TableRow(children: [
+          _CardButton(
+            icon: Icons.exit_to_app,
+            text: 'Salir',
+            color: Colors.red,
+            onTap: () {
+              Provider.of<LoginProvider>(context, listen: false).logout();
+              Navigator.pushNamedAndRemoveUntil(context, Routes.login, (route) => false);
+            },
+          ),
+          Container(),
         ]),
       ]),
     );

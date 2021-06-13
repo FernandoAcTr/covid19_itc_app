@@ -1,0 +1,1 @@
+final BASE_URL = 'https://covid19-itc.herokuapp.com';

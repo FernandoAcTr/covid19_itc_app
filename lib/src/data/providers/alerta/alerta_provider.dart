@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:covid19_itc/src/data/entities/alerta.dart';
 import 'package:covid19_itc/src/data/providers/alerta/alerta_state.dart';
-import 'package:covid19_itc/src/data/providers/changenotifier_with_state.dart';
+import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 
 class AlertaProvider extends ChangeNotifierWithState<AlertaState> {
   bool _active = true;

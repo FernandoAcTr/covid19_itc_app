@@ -1,8 +1,10 @@
-import 'package:covid19_itc/src/data/providers/prueba/prueba_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:covid19_itc/src/data/providers/login/login_provider.dart';
+import 'package:covid19_itc/src/data/providers/prueba/prueba_provider.dart';
+import 'package:covid19_itc/src/device/shared_prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:covid19_itc/src/data/providers/encuesta/encuesta_provider.dart';
 import 'package:covid19_itc/src/ui/router.dart';
@@ -15,8 +17,15 @@ import 'package:covid19_itc/src/ui/pages/alerts/alerts_page.dart';
 import 'package:covid19_itc/src/ui/pages/consultas/constultas_page.dart';
 
 void main() async {
+  //default locale
   await initializeDateFormatting('es_MX', null);
   Intl.defaultLocale = 'es_MX';
+
+  //preferencias de usuario
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new SharedPrefs();
+  await prefs.initPrefs();
+
   runApp(AppProvider());
 }
 
@@ -27,6 +36,7 @@ class AppProvider extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => EncuestaProvider(), lazy: true),
         ChangeNotifierProvider(create: (_) => PruebaProvider(), lazy: true),
+        ChangeNotifierProvider(create: (_) => LoginProvider()),
       ],
       child: MyApp(),
     );
@@ -39,7 +49,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
     return MaterialApp(
       title: 'Material App',
-      initialRoute: Routes.login,
+      initialRoute: Provider.of<LoginProvider>(context, listen: false).state.loggedIn ? Routes.home : Routes.login,
       theme: myTheme,
       routes: {
         Routes.login: (_) => LoginPage(),

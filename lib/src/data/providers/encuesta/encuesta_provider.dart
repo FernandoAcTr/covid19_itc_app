@@ -1,5 +1,5 @@
 import 'package:covid19_itc/src/data/entities/encuesta.dart';
-import 'package:covid19_itc/src/data/providers/changenotifier_with_state.dart';
+import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/encuesta/encuesta_state.dart';
 
 class EncuestaProvider extends ChangeNotifierWithState<EncuestaState> {
