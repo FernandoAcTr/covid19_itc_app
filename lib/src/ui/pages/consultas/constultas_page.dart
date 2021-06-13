@@ -8,8 +8,11 @@ import 'package:covid19_itc/src/ui/utils.dart';
 class ConsultasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ConsultaProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ConsultaProvider()),
+        Provider(create: (_) => FormController()),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text('Consultas'),
@@ -39,11 +42,13 @@ class _FloatingButton extends StatelessWidget {
       backgroundColor: Theme.of(context).accentColor,
       onPressed: () {
         final provider = Provider.of<ConsultaProvider>(context, listen: false);
-        if (provider.state.modalidad == null || !provider.formConsultaKey.currentState!.validate()) {
+        final formController = Provider.of<FormController>(context, listen: false);
+        if (provider.state.modalidad == null || !formController.formConsultaKey.currentState!.validate()) {
           showSnackBar(text: 'Elige una modalidad e ingresa tus síntomas', context: context);
         } else {
+          provider.addConsulta(formController.txtSintomasController.text, provider.state.modalidad!);
           showSnackBar(text: 'Consulta programada. Espera a que un médico te asigne una fecha', context: context);
-          provider.addConsulta(provider.txtSintomasController.text, provider.state.modalidad!);
+          formController.resetForm();
           FocusScope.of(context).unfocus();
         }
       },
@@ -62,5 +67,17 @@ class ListConsultas extends StatelessWidget {
         : children.length > 0
             ? Column(children: children)
             : Center(child: Text('No tienes ninguna consulta programada'));
+  }
+}
+
+class FormController {
+  final _txtSintomasController = TextEditingController();
+  final _formConsultaKey = GlobalKey<FormState>();
+
+  get txtSintomasController => _txtSintomasController;
+  get formConsultaKey => _formConsultaKey;
+
+  resetForm() {
+    _txtSintomasController.text = '';
   }
 }

@@ -1,18 +1,18 @@
 import 'package:covid19_itc/src/data/providers/consulta/consulta_provider.dart';
+import 'package:covid19_itc/src/ui/pages/consultas/constultas_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConsultaForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ConsultaProvider>(context);
     return Form(
-      key: provider.formConsultaKey,
+      key: Provider.of<FormController>(context).formConsultaKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DropdownButton<String>(
-            value: provider.state.modalidad,
+            value: Provider.of<ConsultaProvider>(context).state.modalidad,
             hint: Text('Modalidad'),
             items: [
               DropdownMenuItem(
@@ -25,10 +25,7 @@ class ConsultaForm extends StatelessWidget {
               ),
             ],
             isExpanded: true,
-            onChanged: (value) {
-              final provider = Provider.of<ConsultaProvider>(context, listen: false);
-              provider.modalidad = value;
-            },
+            onChanged: (value) => Provider.of<ConsultaProvider>(context, listen: false).modalidad = value,
           ),
           SizedBox(height: 15),
           TextFormField(
@@ -38,7 +35,7 @@ class ConsultaForm extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Describe tus síntomas....',
             ),
-            controller: provider.txtSintomasController,
+            controller: Provider.of<FormController>(context).txtSintomasController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Campo obligatorio';

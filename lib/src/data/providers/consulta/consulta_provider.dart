@@ -4,12 +4,8 @@ import 'package:covid19_itc/src/data/entities/consulta.dart';
 import 'package:covid19_itc/src/data/entities/medico.dart';
 import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/consulta/consulta_state.dart';
-import 'package:flutter/material.dart';
 
 class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
-  final _txtSintomasController = TextEditingController();
-  final _formConsultaKey = GlobalKey<FormState>();
-
   bool _active = true;
 
   ConsultaProvider() {
@@ -22,9 +18,6 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
   }
 
   set modalidad(String? value) => setState(state.copyWith(modalidad: value));
-
-  get txtSintomasController => _txtSintomasController;
-  get formConsultaKey => _formConsultaKey;
 
   fetchConsultas() async {
     setState(state.copyWith(loading: true));
@@ -57,8 +50,7 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
       status: 'Pendiente',
       solicitudId: Random().nextInt(1000).toString(),
     ));
-    txtSintomasController.text = '';
-    setState(state.copyWith(consultas: currentList));
+    setState(ConsultaState(consultas: currentList, loading: false, modalidad: null));
   }
 
   deleteConsulta(String solicitudId) {
