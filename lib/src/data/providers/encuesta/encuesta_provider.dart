@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:covid19_itc/src/data/keys.dart';
+import 'package:covid19_itc/src/device/shared_prefs.dart';
+import 'package:http/http.dart' as http;
 import 'package:covid19_itc/src/data/entities/encuesta.dart';
 import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/encuesta/encuesta_state.dart';
@@ -10,24 +15,17 @@ class EncuestaProvider extends ChangeNotifierWithState<EncuestaState> {
 
   void fetchEncuestas() async {
     setState(state.copyWith(loading: true));
-    await Future.delayed(Duration(seconds: 2));
-    final List<Encuesta> encuestas = [];
-    final pregunta1 = Pregunta(preguntaId: 1, pregunta: '¿Tienes dirrea?');
-    final pregunta2 = Pregunta(preguntaId: 1, pregunta: '¿Tienes problemas al respirar?');
-    final pregunta3 = Pregunta(preguntaId: 1, pregunta: '¿Tienes secresion nasal?');
-    final respuesta1 = Respuesta(pregunta: pregunta1, respuesta: 'Si');
-    final respuesta2 = Respuesta(pregunta: pregunta2, respuesta: 'Si');
-    final respuesta3 = Respuesta(pregunta: pregunta3, respuesta: 'No');
-    final encuesta = Encuesta(
-        encuestaId: 1,
-        otrosSintomas: 'Nada de nada',
-        fechaAplicacion: DateTime(2021, 06, 7),
-        respuestas: [respuesta1, respuesta2, respuesta3]);
-    encuesta.otrosSintomas = 'No siento nada';
-    // encuestas.add(encuesta);
-    // encuestas.add(encuesta);
-    // encuestas.add(encuesta);
-    // encuestas.add(encuesta);
+    List<Encuesta> encuestas = [];
+    final usuario = SharedPrefs().usuario;
+    final url = "$BASE_URL/encuesta/usuario/${usuario?.usuarioId}";
+    try {
+      final resp = await http.get(Uri.parse(url), headers: {"Authorization": "Bearer ${usuario?.token}"});
+      final body = json.decode(resp.body);
+      encuestas = body.map<Encuesta>((x) => Encuesta.fromMap(x)).toList();
+    } catch (e) {
+      print(e);
+    }
+
     setState(state.copyWith(loading: false, encuestas: encuestas));
   }
 }

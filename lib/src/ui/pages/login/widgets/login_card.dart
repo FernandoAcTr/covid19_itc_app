@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginCard extends StatelessWidget {
-  final emailController = TextEditingController(text: 'jose@gmail.com');
+  final emailController = TextEditingController(text: 'fernando@gmail.com');
   final passwordController = TextEditingController(text: '123');
 
   @override
