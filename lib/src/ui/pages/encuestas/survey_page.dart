@@ -9,25 +9,34 @@ class SurveyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<EncuestaProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Encuestas aplicadas'),
-      ),
-      body: provider.state.loading
-          ? Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: () async => provider.fetchEncuestas(),
-              child: provider.state.encuestas.length > 0
-                  ? buildListView(provider)
-                  : ListView(
-                      children: [
-                        SizedBox(height: 200),
-                        Center(child: Text('Aun no has realizado ninguna encuesta')),
-                      ],
-                    ),
-            ),
+    return ChangeNotifierProvider(
+      create: (_) => EncuestaProvider(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Encuestas aplicadas'),
+          ),
+          body: _EncuestasList()),
     );
+  }
+}
+
+class _EncuestasList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<EncuestaProvider>(context);
+    return provider.state.loading
+        ? Center(child: CircularProgressIndicator())
+        : RefreshIndicator(
+            onRefresh: () async => provider.fetchEncuestas(),
+            child: provider.state.encuestas.length > 0
+                ? buildListView(provider)
+                : ListView(
+                    children: [
+                      SizedBox(height: 200),
+                      Center(child: Text('Aun no has realizado ninguna encuesta')),
+                    ],
+                  ),
+          );
   }
 
   ListView buildListView(EncuestaProvider provider) {

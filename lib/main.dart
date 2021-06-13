@@ -34,8 +34,6 @@ class AppProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => EncuestaProvider(), lazy: true),
-        ChangeNotifierProvider(create: (_) => PruebaProvider(), lazy: true),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
       ],
       child: MyApp(),

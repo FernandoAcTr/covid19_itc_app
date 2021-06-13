@@ -7,11 +7,14 @@ import 'package:provider/provider.dart';
 class TestsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pruebas de Covid-19'),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => PruebaProvider(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Pruebas de Covid-19'),
+        ),
+        body: _TestList(),
       ),
-      body: _TestList(),
     );
   }
 }
