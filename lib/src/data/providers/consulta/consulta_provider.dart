@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:covid19_itc/src/data/keys.dart';
 import 'package:http/http.dart' as http;
+import 'package:covid19_itc/src/data/keys.dart';
 import 'package:covid19_itc/src/data/entities/consulta.dart';
 import 'package:covid19_itc/src/data/changenotifier_with_state.dart';
 import 'package:covid19_itc/src/data/providers/consulta/consulta_state.dart';
@@ -14,6 +15,7 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
     setState(ConsultaState(
       modalidad: null,
       consultas: [],
+      evidencias: [],
       loading: false,
     ));
     fetchConsultas();
@@ -43,7 +45,13 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
     final currentList = state.consultas;
     final usuario = prefs.usuario;
     final url = "$BASE_URL/consultas";
+    final List<http.MultipartFile> multiPartFiles = [];
+
     try {
+      for (var file in state.evidencias) {
+        final multiPartFile = await http.MultipartFile.fromPath('evidencias', file.path);
+        multiPartFiles.add(multiPartFile);
+      }
       final request = http.MultipartRequest('POST', Uri.parse(url))
         ..headers.addAll({'Authorization': "Bearer ${usuario?.token}"})
         ..fields.addAll(
@@ -52,7 +60,9 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
             'sintomas': "$sintomas",
             'modalidad': "$modalidad",
           },
-        );
+        )
+        ..files.addAll(multiPartFiles);
+
       final resp = await request.send();
       final respStr = await resp.stream.bytesToString();
       final consulta = Consulta.fromJson(respStr);
@@ -60,7 +70,7 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
     } catch (e) {
       print(e);
     }
-    setState(ConsultaState(consultas: currentList, loading: false, modalidad: null));
+    setState(ConsultaState(consultas: currentList, loading: false, modalidad: null, evidencias: []));
   }
 
   deleteConsulta(String solicitudId) async {
@@ -75,6 +85,18 @@ class ConsultaProvider extends ChangeNotifierWithState<ConsultaState> {
       print(e);
     }
     setState(state.copyWith(loading: false, consultas: list));
+  }
+
+  addEvidence(File evidence) {
+    final currentEvidenceList = state.evidencias;
+    currentEvidenceList.add(evidence);
+    setState(state.copyWith(evidencias: currentEvidenceList));
+  }
+
+  deleteEvidence(File evidence) {
+    final currentEvidenceList = state.evidencias;
+    currentEvidenceList.remove(evidence);
+    setState(state.copyWith(evidencias: currentEvidenceList));
   }
 
   @override

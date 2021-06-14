@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:covid19_itc/src/ui/pages/consultas/widgets/evidencias_list.dart';
 import 'package:covid19_itc/src/ui/pages/consultas/widgets/floating_buttons.dart';
 import 'package:covid19_itc/src/ui/pages/consultas/widgets/consulta_list.dart';
 import 'package:covid19_itc/src/data/providers/consulta/consulta_provider.dart';
@@ -23,6 +24,7 @@ class ConsultasPage extends StatelessWidget {
             children: [
               ConsultaForm(),
               SizedBox(height: 15),
+              EvidenciasList(), 
               ConsultaList(),
             ],
           ),
