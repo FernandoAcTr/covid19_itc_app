@@ -34,19 +34,29 @@ class ConsultaCard extends StatelessWidget {
               SizedBox(height: 5),
               Text('Sintomas:'),
               Text(consulta.sintomas),
-              Container(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  child: Text('Eliminar'),
-                  onPressed: () {
-                    Provider.of<ConsultaProvider>(context, listen: false).deleteConsulta(consulta.solicitudId);
-                    showSnackBar(text: 'La consulta ha sido eliminada', context: context);
-                  },
-                ),
-              )
+              _actions(context)
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _actions(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomRight,
+      child: TextButton(
+        child: Text('Eliminar'),
+        onPressed: () async {
+          final resp = await showConfirmDialog(
+            context,
+            text: '¿Realmente deseas eliminar la consulta? Esta acción no se puede deshacer',
+          );
+          if (resp == 1) {
+            Provider.of<ConsultaProvider>(context, listen: false).deleteConsulta(consulta.solicitudId);
+            showSnackBar(text: 'La consulta ha sido eliminada', context: context);
+          }
+        },
       ),
     );
   }
