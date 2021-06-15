@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:covid19_itc/src/data/providers/login/login_provider.dart';
-import 'package:covid19_itc/src/data/providers/prueba/prueba_provider.dart';
 import 'package:covid19_itc/src/device/shared_prefs.dart';
-import 'package:provider/provider.dart';
-import 'package:covid19_itc/src/data/providers/encuesta/encuesta_provider.dart';
 import 'package:covid19_itc/src/ui/router.dart';
 import 'package:covid19_itc/src/ui/theme.dart';
 import 'package:covid19_itc/src/ui/pages/pruebas/tests_page.dart';

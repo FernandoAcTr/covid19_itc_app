@@ -1,10 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.covid19_itc">
+    package="com.tedw.covid19_itc">
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.CAMERA" />
    <application
-        android:label="covid19_itc"
-        android:icon="@mipmap/ic_launcher">
+        android:label="SII-Covid"
+        android:icon="@mipmap/launcher_icon">
         <activity
-            android:name=".MainActivity"
+            android:name="com.tedw.covid19_itc.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

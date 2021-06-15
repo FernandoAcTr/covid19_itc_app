@@ -1,4 +1,4 @@
-package com.example.covid19_itc
+package com.tedw.covid19_itc
 
 import io.flutter.embedding.android.FlutterActivity
 
