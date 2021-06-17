@@ -23,6 +23,7 @@ class PruebaProvider extends ChangeNotifierWithState<PruebaState> {
       final resp = await http.get(Uri.parse(url), headers: {'Authorization': "Bearer ${usuario?.token}"});
       final body = json.decode(resp.body);
       pruebas = body.map<Prueba>((x) => Prueba.fromMap(x)).toList();
+      pruebas = pruebas.where((x) => x.fechaDeteccion != null).toList();
       print(pruebas);
     } catch (e) {
       print(e);

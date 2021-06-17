@@ -62,7 +62,7 @@ class _TestItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stringFecha = DateFormat.yMMMMEEEEd().format(prueba.fechaDeteccion!);
+    final stringFecha = prueba.fechaDeteccion != null ? DateFormat.yMMMMEEEEd().format(prueba.fechaDeteccion!) : 'PENDIENTE';
     return ListTile(
       title: Text(stringFecha),
       subtitle: Column(

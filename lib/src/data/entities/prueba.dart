@@ -23,8 +23,8 @@ class Prueba {
 
   factory Prueba.fromMap(Map<String, dynamic> json) => Prueba(
         ordenId: json["orden_id"],
-        resultado: json["resultado"] ?? '',
-        fechaDeteccion: DateTime.parse(json["fecha_deteccion"]),
+        resultado: json["resultado"] ?? 'PENDIENTE',
+        fechaDeteccion: json["fecha_deteccion"] != null ? DateTime.parse(json["fecha_deteccion"]) : null,
         medico: Medico.fromMap(json["medico"]),
         tipo: Tipo.fromMap(json["tipo"]),
       );
